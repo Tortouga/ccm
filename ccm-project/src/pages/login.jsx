@@ -82,7 +82,7 @@ function Login() {
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           className="w-full mb-4 px-4 py-2 rounded-lg bg-red-950 border border-yellow-400 text-yellow-100 placeholder-yellow-300 focus:outline-none focus:ring-2 focus:ring-yellow-400"
-          placeholder="Entrez votre ID"
+          placeholder="ID"
           required
         />
 
@@ -94,7 +94,7 @@ function Login() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           className="w-full mb-6 px-4 py-2 rounded-lg bg-red-950 border border-yellow-400 text-yellow-100 placeholder-yellow-300 focus:outline-none focus:ring-2 focus:ring-yellow-400"
-          placeholder="••••••••"
+          placeholder="password"
           required
         />
 

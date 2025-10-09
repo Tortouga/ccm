@@ -5,6 +5,7 @@ import Login from "./Pages/Login";
 import { LoggedRoutes } from "./components/LoggedRoutes";
 import Home from "./Pages/Home";
 import Logout from "./components/Logout"; // ou le bon chemin
+import Poker from "./Pages/Poker";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route index element={<Home />} />
           <Route path="profile/:id" element={<Profile />} />
           <Route path="/logout" element={<Logout />} />;
+          <Route path="/poker" element={<Poker />} />
         </Route>
       </Route>
     </Routes>
