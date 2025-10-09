@@ -1,33 +1,42 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { account, ID } from "@/lib/appwrite";
+import { useAuth } from "@/context/authContext";
+import { Navigate } from "react-router";
 
 function Login() {
-  const [username, setUsername] = useState("");
+  // const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
-  useEffect(() => {
-    if (localStorage.getItem("isAuthenticated") === "true") {
-      navigate("/");
-    }
-  }, [navigate]);
+  	const { login, loggedInUser, logout } = useAuth();
 
-  const handleLogin = (e) => {
-    e.preventDefault();
-    if (!username || !password) {
-      alert("🛑 Veuillez remplir tous les champs.");
-      return;
-    }
+	  if (loggedInUser) {
+			return <Navigate to="/home" />;
+		}
 
-    if (username === "test" && password === "test") {
-      localStorage.setItem("isAuthenticated", "true");
-      localStorage.setItem("username", username);
-      alert(`🎉 Bienvenue ${username} !`);
-      navigate("/");
-    } else {
-      alert("⚠️ Accès refusé. Identifiants invalides.");
-    }
-  };
+  // useEffect(() => {
+  //   if (localStorage.getItem("isAuthenticated") === "true") {
+  //     navigate("/");
+  //   }
+  // }, [navigate]);
+
+  // const handleLogin = (e) => {
+  //   e.preventDefault();
+  //   if (!username || !password) {
+  //     alert("🛑 Veuillez remplir tous les champs.");
+  //     return;
+  //   }
+
+  //   if (username === "test" && password === "test") {
+  //     localStorage.setItem("isAuthenticated", "true");
+  //     localStorage.setItem("username", username);
+  //     alert(`🎉 Bienvenue ${username} !`);
+  //     navigate("/");
+  //   } else {
+  //     alert("⚠️ Accès refusé. Identifiants invalides.");
+  //   }
+  // };
 
   // 🎲 Effet jetons dynamiques
   useEffect(() => {
@@ -67,7 +76,7 @@ function Login() {
 
       {/* 🃏 Formulaire Casino */}
       <form
-        onSubmit={handleLogin}
+        onSubmit={() => login(email, password)}
         className="relative z-10 bg-black/80 border border-yellow-400 rounded-xl shadow-[0_0_20px_gold] p-8 w-full max-w-md text-yellow-200"
       >
         <h2 className="text-4xl font-bold mb-6 text-center text-yellow-300 tracking-widest">
@@ -78,9 +87,9 @@ function Login() {
           🎲 Identifiant
         </label>
         <input
-          type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
           className="w-full mb-4 px-4 py-2 rounded-lg bg-red-950 border border-yellow-400 text-yellow-100 placeholder-yellow-300 focus:outline-none focus:ring-2 focus:ring-yellow-400"
           placeholder="ID"
           required
