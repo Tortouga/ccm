@@ -5,7 +5,11 @@ import { Outlet } from "react-router-dom";
 import { Home } from "./pages/home";
 
 export const ProtectedRoutes = () => {
-	const { loggedInUser } = useAuth();
+	const { loggedInUser, loading } = useAuth();
 
-	return loggedInUser ? <Home /> : <Navigate to="/login" />;
+	if (loading) {
+		return <div>Chargement...</div>; // Ou un spinner
+	}
+
+	return loggedInUser ? <Outlet /> : <Navigate to="/login" />;
 };

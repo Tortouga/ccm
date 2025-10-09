@@ -14,6 +14,7 @@ export const AuthContext = ({ children }) => {
 				setLoggedInUser(user);
 			} catch (error) {
 				setLoggedInUser(null);
+				console.log(error);
 			} finally {
 				setLoading(false);
 			}
@@ -21,27 +22,32 @@ export const AuthContext = ({ children }) => {
 		checkUser();
 	}, []);
 
-	async function login(email, password) {
-  try {
-		// Vérifie s'il y a déjà une session active
-		await account.get(); // Si ça réussit, une session est déjà active
-		console.log("Session déjà active");
-	} catch (error) {
-		// Si aucune session active, on peut en créer une
-		await account.createEmailPasswordSession(email, password);
-		const user = await account.get();
-		setLoggedInUser(user);
+	async function handleLogin(email, password) {
+		try {
+			await account.createEmailPasswordSession(email, password);
+			const user = await account.get();
+			setLoggedInUser(user);
+		} catch (error) {
+			console.error("Erreur de connexion:", error);
+			throw error;
+		}
 	}
-	}
-	  async function logout() {
+	async function handleLogout() {
+		try {
 			await account.deleteSession({
 				sessionId: "current",
 			});
 			setLoggedInUser(null);
+		} catch (error) {
+			console.error("Erreur de déconnexion:", error);
+			throw error;
 		}
+	}
 
 	return (
-		<Auth.Provider value={{ loggedInUser, login, logout }}>{children}</Auth.Provider>
+		<Auth.Provider value={{ loggedInUser, handleLogin, handleLogout, loading }}>
+			{children}
+		</Auth.Provider>
 	);
 };
 
