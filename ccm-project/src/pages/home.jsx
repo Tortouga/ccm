@@ -1,7 +1,20 @@
-import React from 'react'
+import { useEffect, useState } from "react";
 
-export const Home = () => {
+function Home() {
+  const [username, setUsername] = useState("");
+
+  useEffect(() => {
+    const storedUsername = localStorage.getItem("username");
+    if (storedUsername) {
+      setUsername(storedUsername);
+    }
+  }, []);
+
   return (
-    <div>home page</div>
-  )
+    <h1 className="text-2xl font-bold animate-fade-in">
+      {username ? `Bienvenue ${username} 👋` : "Accueil"}
+    </h1>
+  );
 }
+
+export default Home;

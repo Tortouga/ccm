@@ -1,7 +1,112 @@
-import React from 'react'
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
-export const Login = () => {
+function Login() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (localStorage.getItem("isAuthenticated") === "true") {
+      navigate("/");
+    }
+  }, [navigate]);
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    if (!username || !password) {
+      alert("🛑 Veuillez remplir tous les champs.");
+      return;
+    }
+
+    if (username === "test" && password === "test") {
+      localStorage.setItem("isAuthenticated", "true");
+      localStorage.setItem("username", username);
+      alert(`🎉 Bienvenue ${username} !`);
+      navigate("/");
+    } else {
+      alert("⚠️ Accès refusé. Identifiants invalides.");
+    }
+  };
+
+  // 🎲 Effet jetons dynamiques
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      const tokens = document.querySelectorAll(".token");
+      tokens.forEach((token) => {
+        const offsetX = (e.clientX / window.innerWidth - 0.5) * 10;
+        const offsetY = (e.clientY / window.innerHeight - 0.5) * 10;
+        token.style.transform = `rotate(15deg) translate(${offsetX}px, ${offsetY}px)`;
+      });
+    };
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
+
   return (
-    <div>login page</div>
-  )
+    <div className="relative min-h-screen bg-gradient-to-br from-red-900 via-black to-yellow-900 flex items-center justify-center font-serif overflow-hidden">
+      {/* 🎰 Jetons dynamiques */}
+      <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
+        {[...Array(25)].map((_, i) => {
+          const colors = ["bg-yellow-400", "bg-red-500", "bg-white"];
+          const color = colors[Math.floor(Math.random() * colors.length)];
+          return (
+            <span
+              key={i}
+              className={`token ${color} rounded-full w-2 h-2 absolute shadow-lg`}
+              style={{
+                top: `${Math.random() * 100}%`,
+                left: `${Math.random() * 100}%`,
+                animationDelay: `${Math.random() * 5}s`,
+                animationDuration: `${2 + Math.random() * 3}s`,
+              }}
+            />
+          );
+        })}
+      </div>
+
+      {/* 🃏 Formulaire Casino */}
+      <form
+        onSubmit={handleLogin}
+        className="relative z-10 bg-black/80 border border-yellow-400 rounded-xl shadow-[0_0_20px_gold] p-8 w-full max-w-md text-yellow-200"
+      >
+        <h2 className="text-4xl font-bold mb-6 text-center text-yellow-300 tracking-widest">
+          🎰 Connexion au Casino
+        </h2>
+
+        <label className="block mb-2 text-sm font-medium text-yellow-200">
+          🎲 Identifiant
+        </label>
+        <input
+          type="text"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          className="w-full mb-4 px-4 py-2 rounded-lg bg-red-950 border border-yellow-400 text-yellow-100 placeholder-yellow-300 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+          placeholder="Entrez votre ID"
+          required
+        />
+
+        <label className="block mb-2 text-sm font-medium text-yellow-200">
+          💰 Mot de passe
+        </label>
+        <input
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          className="w-full mb-6 px-4 py-2 rounded-lg bg-red-950 border border-yellow-400 text-yellow-100 placeholder-yellow-300 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+          placeholder="••••••••"
+          required
+        />
+
+        <button
+          type="submit"
+          className="w-full bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-2 rounded-lg transition duration-300 shadow-[0_0_10px_gold]"
+        >
+          🎲 Let's Play! 🎲
+        </button>
+      </form>
+    </div>
+  );
 }
+
+export default Login;
