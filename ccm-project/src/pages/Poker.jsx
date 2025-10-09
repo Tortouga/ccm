@@ -125,7 +125,6 @@ function Poker() {
 
     setResult(`Évaluation de la main : ${resultText}`);
   };
-
   const displayHand = () => {
     return playerHand.map((card, idx) => {
       const isSelected = selectedCards.includes(idx);
