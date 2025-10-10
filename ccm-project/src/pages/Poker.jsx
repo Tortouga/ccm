@@ -1,21 +1,10 @@
 import { useState, useEffect } from "react";
+import { useArgent, useSetArgent } from "@/context/ArgentContext"; // ✅ Contexte global
 import "/src/App.css";
 
 const suits = ["hearts", "diamonds", "clubs", "spades"];
 const values = [
-  "2",
-  "3",
-  "4",
-  "5",
-  "6",
-  "7",
-  "8",
-  "9",
-  "10",
-  "J",
-  "Q",
-  "K",
-  "A",
+  "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"
 ];
 
 function createDeck() {
@@ -34,32 +23,32 @@ function createDeck() {
 
 function getSuitSymbol(suit) {
   switch (suit) {
-    case "hearts":
-      return "♥";
-    case "diamonds":
-      return "♦";
-    case "clubs":
-      return "♣";
-    case "spades":
-      return "♠";
-    default:
-      return "";
+    case "hearts": return "♥";
+    case "diamonds": return "♦";
+    case "clubs": return "♣";
+    case "spades": return "♠";
+    default: return "";
   }
 }
 
 function Poker() {
+  const argent = useArgent();
+  const setArgent = useSetArgent();
+
   const [deck, setDeck] = useState([]);
   const [playerHand, setPlayerHand] = useState([]);
   const [selectedCards, setSelectedCards] = useState([]);
   const [result, setResult] = useState("");
   const [drawDisabled, setDrawDisabled] = useState(true);
-  const [score, setScore] = useState(0);
 
   useEffect(() => {
     displayHand(); // initial empty render
   }, []);
 
   const dealInitial = () => {
+    if (argent < 10) return; // Mise initiale
+    setArgent((prev) => prev - 10);
+
     const newDeck = createDeck();
     const hand = newDeck.splice(0, 5);
     setDeck(newDeck);
@@ -142,8 +131,8 @@ function Poker() {
       points = 5;
     }
 
-    setResult(`Évaluation de la main : ${resultText} (+${points} points)`);
-    setScore((prevScore) => prevScore + points);
+    setResult(`Évaluation de la main : ${resultText} (+${points}€)`);
+    setArgent((prev) => prev + points);
   };
 
   const displayHand = () => {
@@ -171,13 +160,15 @@ function Poker() {
       <h1>Five-Card Draw Poker</h1>
       <div id="player-hand">{displayHand()}</div>
       <div id="controls">
-        <button onClick={dealInitial}>Distribuer</button>
+        <button onClick={dealInitial} disabled={argent < 10}>
+          Distribuer (10€)
+        </button>
         <button onClick={drawCards} disabled={drawDisabled}>
           Changer les cartes
         </button>
       </div>
       <div id="result">{result}</div>
-      <div id="score">Score total : {score} points</div>
+      <div id="score">💰 Argent : {argent} €</div>
     </div>
   );
 }
