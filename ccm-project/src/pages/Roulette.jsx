@@ -1,10 +1,9 @@
 "use client";
-
 import React, { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
-export const Game = () => {
+export const Roulette = () => {
   const items = [
     { name: "d", rarity: "Rare", color: "bg-violet-500" },
     { name: "c", rarity: "Legendary", color: "bg-yellow-400" },
@@ -248,4 +247,4 @@ export const Game = () => {
   );
 };
 
-export default Game;
+export default Roulette;
