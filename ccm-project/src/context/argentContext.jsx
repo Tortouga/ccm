@@ -1,24 +1,19 @@
 import React, { createContext, useContext, useState } from "react";
 
-const ArgentContext = createContext(null);
+const ArgentContext = createContext();
+const SetArgentContext = createContext();
 
-export const ArgentProvider = ({ children, initial = 100 }) => {
-  const [argent, setArgent] = useState(initial);
+export const ArgentProvider = ({ children }) => {
+  const [argent, setArgent] = useState(100); // valeur initiale
+
   return (
-    <ArgentContext.Provider value={{ argent, setArgent }}>
-      {children}
+    <ArgentContext.Provider value={argent}>
+      <SetArgentContext.Provider value={setArgent}>
+        {children}
+      </SetArgentContext.Provider>
     </ArgentContext.Provider>
   );
 };
 
-export const useArgent = () => {
-  const ctx = useContext(ArgentContext);
-  if (!ctx) throw new Error("useArgent must be used within ArgentProvider");
-  return ctx.argent;
-};
-
-export const useSetArgent = () => {
-  const ctx = useContext(ArgentContext);
-  if (!ctx) throw new Error("useSetArgent must be used within ArgentProvider");
-  return ctx.setArgent;
-};
+export const useArgent = () => useContext(ArgentContext);
+export const useSetArgent = () => useContext(SetArgentContext);

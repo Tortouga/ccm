@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { useArgent, useSetArgent } from "@/context/ArgentContext";
+import { useArgent, useSetArgent } from "@/context/argentContext";
 
 const suits = ["♠", "♥", "♦", "♣"];
 const values = [
