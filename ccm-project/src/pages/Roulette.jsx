@@ -12,8 +12,8 @@ export const Roulette = () => {
     { name: "+35", rarity: "Rare", color: "bg-violet-500" },
     { name: "+200", rarity: "Legendaire", color: "bg-yellow-400" },
     { name: "+75", rarity: "Epic", color: "bg-pink-500" },
-    { name: "-35", rarity: "Commune", color: "bg-gray-400" },
-    { name: "-10", rarity: "Commune", color: "bg-gray-400" },
+    { name: "-50", rarity: "Commune", color: "bg-gray-400" },
+    { name: "-25", rarity: "Commune", color: "bg-gray-400" },
     { name: "-500", rarity: "FAILLITE", color: "bg-red-500" },
   ];
 
@@ -32,9 +32,9 @@ export const Roulette = () => {
 
   const getRandomItem = () => {
     const weights = {
-      Commune: 60,
-      Rare: 28,
-      Epic: 8,
+      Commune: 50,
+      Rare: 35,
+      Epic: 11,
       Legendaire: 3,
       FAILLITE: 1,
     };
@@ -164,10 +164,10 @@ export const Roulette = () => {
           setRolling(false);
           setResult(finalItem);
           // Gain/perte d'argent selon le résultat
-          if (finalItem.name === "-35") {
-            setArgent((a) => a - 35);
-          } else if (finalItem.name === "-10") {
-            setArgent((a) => a - 10);
+          if (finalItem.name === "-50") {
+            setArgent((a) => a - 50);
+          } else if (finalItem.name === "-25") {
+            setArgent((a) => a - 25);
           } else if (finalItem.name === "+35") {
             setArgent((a) => a + 35);
           } else if (finalItem.name === "+75") {
