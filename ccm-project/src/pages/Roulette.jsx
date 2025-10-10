@@ -2,14 +2,38 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+<<<<<<< HEAD
 
 export const Roulette = () => { 
+=======
+import {
+  ArgentProvider,
+  useArgent,
+  useSetArgent,
+} from "@/context/argentContext";
+
+<<<<<<<< HEAD:ccm-project/src/pages/Roulette.jsx
+export const Roulette = () => {
+>>>>>>> V0_Cathy
   const items = [
     { name: "Diamant", rarity: "Rare", color: "bg-blue-500" },
     { name: "Netherite", rarity: "Legendary", color: "bg-yellow-400" },
     { name: "Émeraude", rarity: "Epic", color: "bg-green-500" },
     { name: "Fer", rarity: "Common", color: "bg-gray-400" },
     { name: "Charbon", rarity: "Common", color: "bg-gray-600" },
+<<<<<<< HEAD
+=======
+========
+const GameContent = () => {
+  const items = [
+    { name: "+35", rarity: "Rare", color: "bg-violet-500" },
+    { name: "+200", rarity: "Legendaire", color: "bg-yellow-400" },
+    { name: "+75", rarity: "Epic", color: "bg-pink-500" },
+    { name: "-35", rarity: "Commune", color: "bg-gray-400" },
+    { name: "-10", rarity: "Commune", color: "bg-gray-400" },
+    { name: "-500", rarity: "FAILLITE", color: "bg-red-500" },
+>>>>>>>> V0_Cathy:ccm-project/src/pages/game.jsx
+>>>>>>> V0_Cathy
   ];
 
   const shuffle = (array) => {
@@ -26,10 +50,18 @@ export const Roulette = () => {
 
   const getRandomItem = () => {
     const weights = {
+<<<<<<< HEAD
       Common: 60,
       Rare: 28,
       Epic: 10,
       Legendary: 2,
+=======
+      Commune: 60,
+      Rare: 28,
+      Epic: 8,
+      Legendaire: 3,
+      FAILLITE: 1,
+>>>>>>> V0_Cathy
     };
     const weightedPool = items.flatMap((item) =>
       Array(weights[item.rarity]).fill(item)
@@ -43,7 +75,12 @@ export const Roulette = () => {
   const [result, setResult] = useState(null);
   const [pendingAnim, setPendingAnim] = useState(null);
   const [measuredItemWidth, setMeasuredItemWidth] = useState(null);
+<<<<<<< HEAD
   const [argent, setArgent] = useState(100);
+=======
+  const argent = useArgent();
+  const setArgent = useSetArgent();
+>>>>>>> V0_Cathy
   const animationRef = useRef(null);
   const containerRef = useRef(null);
   const [containerWidth, setContainerWidth] = useState(0);
@@ -140,11 +177,34 @@ export const Roulette = () => {
         } else {
           setRolling(false);
           setResult(finalItem);
+<<<<<<< HEAD
+=======
+<<<<<<<< HEAD:ccm-project/src/pages/Roulette.jsx
+>>>>>>> V0_Cathy
           if (finalItem.name === "R") setArgent((a) => a - 40);
           else if (finalItem.name === "a") setArgent((a) => a - 10);
           else if (finalItem.name === "d") setArgent((a) => a + 35);
           else if (finalItem.name === "b") setArgent((a) => a + 50);
           else if (finalItem.name === "c") setArgent((a) => a + 200);
+<<<<<<< HEAD
+=======
+========
+          // Gain/perte d'argent selon le résultat
+          if (finalItem.name === "-35") {
+            setArgent((a) => a - 35);
+          } else if (finalItem.name === "-10") {
+            setArgent((a) => a - 10);
+          } else if (finalItem.name === "+35") {
+            setArgent((a) => a + 35);
+          } else if (finalItem.name === "+75") {
+            setArgent((a) => a + 75);
+          } else if (finalItem.name === "+200") {
+            setArgent((a) => a + 200);
+          } else if (finalItem.name === "-500") {
+            setArgent((a) => a - 500);
+          }
+>>>>>>>> V0_Cathy:ccm-project/src/pages/game.jsx
+>>>>>>> V0_Cathy
           setPendingAnim(null);
         }
       };
@@ -215,8 +275,18 @@ export const Roulette = () => {
 
       {result && (
         <div className="text-xl font-semibold text-center mt-4">
+<<<<<<< HEAD
           🎉 Tu as obtenu :{" "}
           <span className={cn(result.color, "px-2 py-1 rounded text-black")}>
+=======
+<<<<<<<< HEAD:ccm-project/src/pages/Roulette.jsx
+          🎉 Tu as obtenu :{" "}
+          <span className={cn(result.color, "px-2 py-1 rounded text-black")}>
+========
+          🎉 Tu as obtenu : $
+          <span className={cn(result.color, "px-2 py-1 rounded text-white")}>
+>>>>>>>> V0_Cathy:ccm-project/src/pages/game.jsx
+>>>>>>> V0_Cathy
             {result.name} ({result.rarity})
           </span>
         </div>
@@ -225,4 +295,18 @@ export const Roulette = () => {
   );
 };
 
+<<<<<<< HEAD
 export default Roulette;
+=======
+<<<<<<<< HEAD:ccm-project/src/pages/Roulette.jsx
+export default Roulette;
+========
+const Game = () => (
+  <ArgentProvider>
+    <GameContent />
+  </ArgentProvider>
+);
+
+export default Game;
+>>>>>>>> V0_Cathy:ccm-project/src/pages/game.jsx
+>>>>>>> V0_Cathy

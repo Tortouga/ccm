@@ -6,8 +6,7 @@ import { ProtectedRoutes } from "./protectedRoutes";
 import Home from "./Pages/Home";
 import Logout from "./components/Logout"; // ou le bon chemin
 import Poker from "./Pages/Poker";
-import React, { useState } from "react";
-import Game from "./pages/game";
+import Roulette from "./pages/Roulette";
 
 function App() {
   return (
@@ -19,7 +18,11 @@ function App() {
           <Route path="profile/:id" element={<Profile />} />
           <Route path="/logout" element={<Logout />} />;
           <Route path="/poker" element={<Poker />} />
+<<<<<<< HEAD
           <Route path="/game" element={<Game />} />
+=======
+          <Route path="/roulette" element={<Roulette />} />
+>>>>>>> V0_Cathy
         </Route>
       </Route>
     </Routes>
