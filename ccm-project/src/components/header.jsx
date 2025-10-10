@@ -4,7 +4,6 @@ import { useAuth } from '@/context/authContext';
 export function Header() {
     const { handleLogout } = useAuth();
 
-
   return (
     <header className="bg-gradient-to-r from-red-700 text-white via-black to-yellow-500 text-gold-200 py-4 px-6 border-b border-yellow-400 font-serif shadow-[0_0_15px_gold]">
       <nav className="flex gap-6 justify-center text-sm tracking-widest uppercase">
