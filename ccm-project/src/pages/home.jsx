@@ -25,12 +25,15 @@ export function Home() {
         </Link>
 
         {/* ♠ Carte Pique */}
-        <div className="relative bg-gradient-to-br from-white to-gray-200 text-black border-[6px] border-black rounded-[1rem] shadow-[0_0_20px_rgba(0,0,0,0.4)] w-64 h-96 flex flex-col items-center justify-center font-serif hover:scale-105 transition duration-300">
+        <Link
+          to="/blackjack"
+          className="relative bg-gradient-to-br from-white to-gray-200 text-black border-[6px] border-black rounded-[1rem] shadow-[0_0_20px_rgba(0,0,0,0.4)] w-64 h-96 flex flex-col items-center justify-center font-serif hover:scale-105 transition duration-300"
+        >
           <div className="absolute top-4 left-4 text-3xl">♠</div>
           <div className="absolute bottom-4 right-4 text-3xl rotate-180">♠</div>
-          <h2 className="text-2xl font-bold mb-2 mt-10">Machine à sous</h2>
+          <h2 className="text-2xl font-bold mb-2 mt-10">BlackJack</h2>
           <p className="text-sm text-center px-4">Tente ta chance !</p>
-        </div>
+        </Link>
 
         {/* ♦ Carte Carreau */}
         <Link

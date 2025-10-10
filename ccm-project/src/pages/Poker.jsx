@@ -53,6 +53,7 @@ function Poker() {
   const [selectedCards, setSelectedCards] = useState([]);
   const [result, setResult] = useState("");
   const [drawDisabled, setDrawDisabled] = useState(true);
+  const [score, setScore] = useState(0);
 
   useEffect(() => {
     displayHand(); // initial empty render
@@ -113,18 +114,38 @@ function Poker() {
     const isLowStraight = lowStraight.every((v) => valueCount[v]);
 
     let resultText = "Rien de spécial";
+    let points = 0;
 
-    if (isStraight && isFlush) resultText = "Quinte flush";
-    else if (counts[0] === 4) resultText = "Carré";
-    else if (counts[0] === 3 && counts[1] === 2) resultText = "Full";
-    else if (isFlush) resultText = "Couleur";
-    else if (isStraight || isLowStraight) resultText = "Suite";
-    else if (counts[0] === 3) resultText = "Brelan";
-    else if (counts[0] === 2 && counts[1] === 2) resultText = "Double paire";
-    else if (counts[0] === 2) resultText = "Paire";
+    if (isStraight && isFlush) {
+      resultText = "Quinte flush";
+      points = 100;
+    } else if (counts[0] === 4) {
+      resultText = "Carré";
+      points = 80;
+    } else if (counts[0] === 3 && counts[1] === 2) {
+      resultText = "Full";
+      points = 60;
+    } else if (isFlush) {
+      resultText = "Couleur";
+      points = 50;
+    } else if (isStraight || isLowStraight) {
+      resultText = "Suite";
+      points = 40;
+    } else if (counts[0] === 3) {
+      resultText = "Brelan";
+      points = 25;
+    } else if (counts[0] === 2 && counts[1] === 2) {
+      resultText = "Double paire";
+      points = 15;
+    } else if (counts[0] === 2) {
+      resultText = "Paire";
+      points = 5;
+    }
 
-    setResult(`Évaluation de la main : ${resultText}`);
+    setResult(`Évaluation de la main : ${resultText} (+${points} points)`);
+    setScore((prevScore) => prevScore + points);
   };
+
   const displayHand = () => {
     return playerHand.map((card, idx) => {
       const isSelected = selectedCards.includes(idx);
@@ -156,6 +177,7 @@ function Poker() {
         </button>
       </div>
       <div id="result">{result}</div>
+      <div id="score">Score total : {score} points</div>
     </div>
   );
 }
