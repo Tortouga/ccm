@@ -19,7 +19,7 @@ function App() {
           <Route path="profile/:id" element={<Profile />} />
           <Route path="/logout" element={<Logout />} />;
           <Route path="/poker" element={<Poker />} />
-          <Route path="/game" element={<Game />}/>
+          <Route path="/game" element={<Game />} />
         </Route>
       </Route>
     </Routes>

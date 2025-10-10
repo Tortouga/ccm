@@ -3,14 +3,20 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import {
+  ArgentProvider,
+  useArgent,
+  useSetArgent,
+} from "@/context/argentContext";
 
-export const Game = () => {
+const GameContent = () => {
   const items = [
-    { name: "d", rarity: "Rare", color: "bg-violet-500" },
-    { name: "c", rarity: "Legendary", color: "bg-yellow-400" },
-    { name: "b", rarity: "Epic", color: "bg-pink-500" },
-    { name: "a", rarity: "Common", color: "bg-gray-400" },
-    { name: "R", rarity: "Common", color: "bg-gray-400" },
+    { name: "+35", rarity: "Rare", color: "bg-violet-500" },
+    { name: "+200", rarity: "Legendaire", color: "bg-yellow-400" },
+    { name: "+75", rarity: "Epic", color: "bg-pink-500" },
+    { name: "-35", rarity: "Commune", color: "bg-gray-400" },
+    { name: "-10", rarity: "Commune", color: "bg-gray-400" },
+    { name: "-500", rarity: "FAILLITE", color: "bg-red-500" },
   ];
 
   // Fonction mélange
@@ -28,10 +34,11 @@ export const Game = () => {
 
   const getRandomItem = () => {
     const weights = {
-      Common: 60,
+      Commune: 60,
       Rare: 28,
-      Epic: 10,
-      Legendary: 2,
+      Epic: 8,
+      Legendaire: 3,
+      FAILLITE: 1,
     };
     const weightedPool = items.flatMap((item) =>
       Array(weights[item.rarity]).fill(item)
@@ -45,7 +52,8 @@ export const Game = () => {
   const [result, setResult] = useState(null);
   const [pendingAnim, setPendingAnim] = useState(null);
   const [measuredItemWidth, setMeasuredItemWidth] = useState(null);
-  const [argent, setArgent] = useState(100);
+  const argent = useArgent();
+  const setArgent = useSetArgent();
   const animationRef = useRef(null);
   const containerRef = useRef(null);
   const [containerWidth, setContainerWidth] = useState(0);
@@ -158,16 +166,18 @@ export const Game = () => {
           setRolling(false);
           setResult(finalItem);
           // Gain/perte d'argent selon le résultat
-          if (finalItem.name === "R") {
-            setArgent((a) => a - 40);
-          } else if (finalItem.name === "a") {
+          if (finalItem.name === "-35") {
+            setArgent((a) => a - 35);
+          } else if (finalItem.name === "-10") {
             setArgent((a) => a - 10);
-          } else if (finalItem.name === "d") {
+          } else if (finalItem.name === "+35") {
             setArgent((a) => a + 35);
-          } else if (finalItem.name === "b") {
-            setArgent((a) => a + 50);
-          } else if (finalItem.name === "c") {
+          } else if (finalItem.name === "+75") {
+            setArgent((a) => a + 75);
+          } else if (finalItem.name === "+200") {
             setArgent((a) => a + 200);
+          } else if (finalItem.name === "-500") {
+            setArgent((a) => a - 500);
           }
           setPendingAnim(null);
         }
@@ -238,7 +248,7 @@ export const Game = () => {
 
       {result && (
         <div className="text-xl font-semibold text-center mt-4">
-          🎉 Tu as obtenu :{" "}
+          🎉 Tu as obtenu : $
           <span className={cn(result.color, "px-2 py-1 rounded text-white")}>
             {result.name} ({result.rarity})
           </span>
@@ -247,5 +257,11 @@ export const Game = () => {
     </div>
   );
 };
+
+const Game = () => (
+  <ArgentProvider>
+    <GameContent />
+  </ArgentProvider>
+);
 
 export default Game;
