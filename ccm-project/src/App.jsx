@@ -9,7 +9,7 @@ import Poker from "./Pages/Poker";
 import Roulette from "./pages/Roulette";
 import { Apropos } from "./pages/apropos";
 import Blackjack from "./pages/Blackjack";
-import { ArgentProvider } from "@/context/ArgentContext";
+import { ArgentProvider } from "@/context/argentContext";
 
 function App() {
   return (
