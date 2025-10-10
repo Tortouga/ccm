@@ -18,11 +18,7 @@ function App() {
           <Route path="profile/:id" element={<Profile />} />
           <Route path="/logout" element={<Logout />} />;
           <Route path="/poker" element={<Poker />} />
-<<<<<<< HEAD
-          <Route path="/game" element={<Game />} />
-=======
           <Route path="/roulette" element={<Roulette />} />
->>>>>>> V0_Cathy
         </Route>
       </Route>
     </Routes>

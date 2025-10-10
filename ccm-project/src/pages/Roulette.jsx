@@ -1,30 +1,13 @@
-"use client";
 import React, { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-<<<<<<< HEAD
-
-export const Roulette = () => { 
-=======
 import {
   ArgentProvider,
   useArgent,
   useSetArgent,
 } from "@/context/argentContext";
 
-<<<<<<<< HEAD:ccm-project/src/pages/Roulette.jsx
 export const Roulette = () => {
->>>>>>> V0_Cathy
-  const items = [
-    { name: "Diamant", rarity: "Rare", color: "bg-blue-500" },
-    { name: "Netherite", rarity: "Legendary", color: "bg-yellow-400" },
-    { name: "Émeraude", rarity: "Epic", color: "bg-green-500" },
-    { name: "Fer", rarity: "Common", color: "bg-gray-400" },
-    { name: "Charbon", rarity: "Common", color: "bg-gray-600" },
-<<<<<<< HEAD
-=======
-========
-const GameContent = () => {
   const items = [
     { name: "+35", rarity: "Rare", color: "bg-violet-500" },
     { name: "+200", rarity: "Legendaire", color: "bg-yellow-400" },
@@ -32,36 +15,28 @@ const GameContent = () => {
     { name: "-35", rarity: "Commune", color: "bg-gray-400" },
     { name: "-10", rarity: "Commune", color: "bg-gray-400" },
     { name: "-500", rarity: "FAILLITE", color: "bg-red-500" },
->>>>>>>> V0_Cathy:ccm-project/src/pages/game.jsx
->>>>>>> V0_Cathy
   ];
 
-  const shuffle = (array) => {
+  // Fonction mélange
+  function shuffle(array) {
     const arr = array.slice();
     for (let i = arr.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [arr[i], arr[j]] = [arr[j], arr[i]];
     }
     return arr;
-  };
+  }
 
-  const ITEM_WIDTH = 128;
+  const ITEM_WIDTH = 128; // correspond à w-32 en Tailwind
   const REPEAT_COUNT = 50;
 
   const getRandomItem = () => {
     const weights = {
-<<<<<<< HEAD
-      Common: 60,
-      Rare: 28,
-      Epic: 10,
-      Legendary: 2,
-=======
       Commune: 60,
       Rare: 28,
       Epic: 8,
       Legendaire: 3,
       FAILLITE: 1,
->>>>>>> V0_Cathy
     };
     const weightedPool = items.flatMap((item) =>
       Array(weights[item.rarity]).fill(item)
@@ -75,12 +50,8 @@ const GameContent = () => {
   const [result, setResult] = useState(null);
   const [pendingAnim, setPendingAnim] = useState(null);
   const [measuredItemWidth, setMeasuredItemWidth] = useState(null);
-<<<<<<< HEAD
-  const [argent, setArgent] = useState(100);
-=======
   const argent = useArgent();
   const setArgent = useSetArgent();
->>>>>>> V0_Cathy
   const animationRef = useRef(null);
   const containerRef = useRef(null);
   const [containerWidth, setContainerWidth] = useState(0);
@@ -89,6 +60,7 @@ const GameContent = () => {
     if (containerRef.current) {
       setContainerWidth(containerRef.current.offsetWidth);
     }
+    // Optionnel: écouter redimensionnement fenêtre si responsive nécessaire
     const handleResize = () => {
       if (containerRef.current) {
         setContainerWidth(containerRef.current.offsetWidth);
@@ -105,6 +77,7 @@ const GameContent = () => {
     setResult(null);
     setOffset(0);
 
+    // Recalcule la largeur du container juste avant l'animation
     let currentContainerWidth = containerWidth;
     if (containerRef.current) {
       currentContainerWidth = containerRef.current.offsetWidth;
@@ -112,29 +85,37 @@ const GameContent = () => {
     }
 
     const finalItem = getRandomItem();
+
+    // Mélange la liste items à chaque lancer pour l'affichage
     const shuffledItems = shuffle(items);
 
+    // Crée une longue liste affichée, répétée à partir de shuffledItems
     let longList = [];
     for (let i = 0; i < REPEAT_COUNT; i++) {
       longList.push(...shuffledItems);
     }
 
+    // On choisit un index aléatoire dans la partie centrale de la longue liste
     const min = Math.floor(REPEAT_COUNT * shuffledItems.length * 0.5);
     const max = Math.floor(REPEAT_COUNT * shuffledItems.length * 0.7);
     const targetIndex = Math.floor(Math.random() * (max - min)) + min;
 
+    // Place le finalItem à la position cible
     longList[targetIndex] = finalItem;
 
     setAnimationItems(longList);
+    // Store pending animation info; an effect will measure DOM and start it
     setPendingAnim({ targetIndex, finalItem, currentContainerWidth });
   };
 
+  // Nettoyage si le composant est démonté
   useEffect(() => {
     return () => {
       if (animationRef.current) cancelAnimationFrame(animationRef.current);
     };
   }, []);
 
+  // Start pending animation after DOM has rendered animationItems
   useEffect(() => {
     if (!pendingAnim) return;
     let raf1, raf2;
@@ -153,9 +134,14 @@ const GameContent = () => {
           const marginRight = parseFloat(style.marginRight) || 0;
           itemWidth = rect.width + marginLeft + marginRight;
         }
-      } catch (e) {}
+      } catch (e) {
+        // ignore
+      }
 
+      // measure container width fresh (avoid stale value)
       const containerW = containerRef.current?.offsetWidth || containerWidth;
+
+      // store measured item width so row CSS can use it
       setMeasuredItemWidth(itemWidth);
 
       const finalOffset =
@@ -177,18 +163,6 @@ const GameContent = () => {
         } else {
           setRolling(false);
           setResult(finalItem);
-<<<<<<< HEAD
-=======
-<<<<<<<< HEAD:ccm-project/src/pages/Roulette.jsx
->>>>>>> V0_Cathy
-          if (finalItem.name === "R") setArgent((a) => a - 40);
-          else if (finalItem.name === "a") setArgent((a) => a - 10);
-          else if (finalItem.name === "d") setArgent((a) => a + 35);
-          else if (finalItem.name === "b") setArgent((a) => a + 50);
-          else if (finalItem.name === "c") setArgent((a) => a + 200);
-<<<<<<< HEAD
-=======
-========
           // Gain/perte d'argent selon le résultat
           if (finalItem.name === "-35") {
             setArgent((a) => a - 35);
@@ -203,8 +177,6 @@ const GameContent = () => {
           } else if (finalItem.name === "-500") {
             setArgent((a) => a - 500);
           }
->>>>>>>> V0_Cathy:ccm-project/src/pages/game.jsx
->>>>>>> V0_Cathy
           setPendingAnim(null);
         }
       };
@@ -212,6 +184,7 @@ const GameContent = () => {
       animationRef.current = requestAnimationFrame(animate);
     };
 
+    // Two rAFs to ensure layout is stable
     raf1 = requestAnimationFrame(() => {
       raf2 = requestAnimationFrame(() => {
         if (!cancelled) start();
@@ -226,29 +199,27 @@ const GameContent = () => {
   }, [pendingAnim, animationItems]);
 
   return (
-    <div className="flex flex-col items-center gap-6 py-10 bg-gradient-to-br from-[#1a0000] to-black text-yellow-300 font-cinzel">
-      <h1 className="text-3xl font-bold drop-shadow-md">🎰 Bonne chance</h1>
+    <div className="flex flex-col items-center gap-6 py-10">
+      <h1 className="text-2xl font-bold">Bonne chance</h1>
 
-      <div className="text-lg font-semibold mb-2">💰 Argent : {argent} €</div>
+      <div className="text-lg font-semibold mb-2">Argent : {argent} €</div>
 
-      <Button
-        className="bg-gradient-to-r from-yellow-400 to-red-500 text-black font-bold shadow-md hover:scale-105 transition-transform"
-        onClick={openCase}
-        disabled={rolling || containerWidth === 0}
-      >
+      <Button onClick={openCase} disabled={rolling || containerWidth === 0}>
         {rolling
           ? "..."
           : containerWidth === 0
           ? "Chargement..."
-          : "🎲 Tenter sa chance"}
+          : "Tenter sa chance"}
       </Button>
 
       <div
         ref={containerRef}
-        className="relative w-full max-w-3xl overflow-hidden border-4 border-yellow-500 rounded-md bg-black h-20"
+        className="relative w-full max-w-3xl overflow-hidden border border-muted rounded-md bg-background h-20"
       >
+        {/* Ligne blanche au centre */}
         <div className="absolute top-0 bottom-0 left-1/2 w-1 border-l-4 border-white z-10 -translate-x-1/2" />
 
+        {/* Roulette */}
         <div
           className="flex"
           style={{
@@ -263,7 +234,7 @@ const GameContent = () => {
             <div
               key={idx}
               className={cn(
-                "w-32 h-20 flex items-center justify-center text-black text-sm font-bold mx-[2px] rounded-full shadow-lg border-2 border-white",
+                "w-32 h-20 flex items-center justify-center text-white text-sm font-semibold mx-[2px] rounded",
                 item.color
               )}
             >
@@ -275,18 +246,8 @@ const GameContent = () => {
 
       {result && (
         <div className="text-xl font-semibold text-center mt-4">
-<<<<<<< HEAD
-          🎉 Tu as obtenu :{" "}
-          <span className={cn(result.color, "px-2 py-1 rounded text-black")}>
-=======
-<<<<<<<< HEAD:ccm-project/src/pages/Roulette.jsx
-          🎉 Tu as obtenu :{" "}
-          <span className={cn(result.color, "px-2 py-1 rounded text-black")}>
-========
           🎉 Tu as obtenu : $
           <span className={cn(result.color, "px-2 py-1 rounded text-white")}>
->>>>>>>> V0_Cathy:ccm-project/src/pages/game.jsx
->>>>>>> V0_Cathy
             {result.name} ({result.rarity})
           </span>
         </div>
@@ -295,18 +256,10 @@ const GameContent = () => {
   );
 };
 
-<<<<<<< HEAD
-export default Roulette;
-=======
-<<<<<<<< HEAD:ccm-project/src/pages/Roulette.jsx
-export default Roulette;
-========
 const Game = () => (
   <ArgentProvider>
-    <GameContent />
+    <Roulette />
   </ArgentProvider>
 );
 
 export default Game;
->>>>>>>> V0_Cathy:ccm-project/src/pages/game.jsx
->>>>>>> V0_Cathy
