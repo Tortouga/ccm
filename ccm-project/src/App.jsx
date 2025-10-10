@@ -7,21 +7,24 @@ import Home from "./Pages/Home";
 import Logout from "./components/Logout"; // ou le bon chemin
 import Poker from "./Pages/Poker";
 import Roulette from "./pages/Roulette";
+import { ArgentProvider } from "./context/argentContext";
 
 function App() {
   return (
-    <Routes>
-      <Route path="/login" element={<Login />} />
-      <Route element={<ProtectedRoutes />}>
-        <Route path="/" element={<MainLayout />}>
-          <Route index element={<Home />} />
-          <Route path="profile/:id" element={<Profile />} />
-          <Route path="/logout" element={<Logout />} />;
-          <Route path="/poker" element={<Poker />} />
-          <Route path="/roulette" element={<Roulette />} />
+    <ArgentProvider>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route element={<ProtectedRoutes />}>
+          <Route path="/" element={<MainLayout />}>
+            <Route index element={<Home />} />
+            <Route path="profile/:id" element={<Profile />} />
+            <Route path="/logout" element={<Logout />} />;
+            <Route path="/poker" element={<Poker />} />
+            <Route path="/roulette" element={<Roulette />} />
+          </Route>
         </Route>
-      </Route>
-    </Routes>
+      </Routes>
+    </ArgentProvider>
   );
 }
 export default App;

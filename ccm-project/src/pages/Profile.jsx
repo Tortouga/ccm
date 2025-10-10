@@ -1,3 +1,4 @@
+import { useArgent, useSetArgent } from "@/context/argentContext";
 import { useParams } from "react-router-dom";
 
 function Profile() {
@@ -14,6 +15,9 @@ function Profile() {
         </p>
         <p className="text-gray-600">
           Données fictives pour l'utilisateur #{id}
+        </p>
+        <p>
+          {useArgent} : {useArgent()} €
         </p>
       </div>
     </div>
