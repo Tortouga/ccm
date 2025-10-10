@@ -7,7 +7,7 @@ export const Profile = {
 			const response = await tablesDB.createRow({
 				databaseId: DATABASE_ID,
 				tableId: USERS_TABLE_ID,
-				id: userInfos.id,
+				rowId: userInfos.id,
 				fields: {
 					username: userInfos.username,
 					email: userInfos.email,
