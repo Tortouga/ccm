@@ -8,6 +8,7 @@ import Logout from "./components/Logout"; // ou le bon chemin
 import Poker from "./Pages/Poker";
 import Roulette from "./pages/Roulette";
 import { ArgentProvider } from "./context/argentContext";
+import { Apropos } from "./pages/apropos";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
             <Route path="/logout" element={<Logout />} />;
             <Route path="/poker" element={<Poker />} />
             <Route path="/roulette" element={<Roulette />} />
+            <Route path="/Apropos" element={<Apropos />} />
           </Route>
         </Route>
       </Routes>

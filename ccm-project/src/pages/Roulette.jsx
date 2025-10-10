@@ -165,17 +165,17 @@ export const Roulette = () => {
           setResult(finalItem);
           // Gain/perte d'argent selon le résultat
           if (finalItem.name === "-50") {
-            setArgent((a) => a - 50);
+            UseSetArgent((a) => a - 50);
           } else if (finalItem.name === "-25") {
-            setArgent((a) => a - 25);
+            UseSetArgent((a) => a - 25);
           } else if (finalItem.name === "+35") {
-            setArgent((a) => a + 35);
+            UseSetArgent((a) => a + 35);
           } else if (finalItem.name === "+75") {
-            setArgent((a) => a + 75);
+            UseSetArgent((a) => a + 75);
           } else if (finalItem.name === "+200") {
-            setArgent((a) => a + 200);
+            UseSetArgent((a) => a + 200);
           } else if (finalItem.name === "-500") {
-            setArgent((a) => a - 500);
+            UseSetArgent((a) => a - 500);
           }
           setPendingAnim(null);
         }
