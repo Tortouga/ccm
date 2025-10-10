@@ -9,26 +9,23 @@ import Poker from "./Pages/Poker";
 import Roulette from "./pages/Roulette";
 import { Apropos } from "./pages/apropos";
 import Blackjack from "./pages/Blackjack";
-import { ArgentProvider } from "@/context/ArgentContext";
 
 function App() {
   return (
-    <ArgentProvider>
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route element={<ProtectedRoutes />}>
-          <Route path="/" element={<MainLayout />}>
-            <Route index element={<Home />} />
-            <Route path="profile/:id" element={<Profile />} />
-            <Route path="/logout" element={<Logout />} />
-            <Route path="/poker" element={<Poker />} />
-            <Route path="/roulette" element={<Roulette />} />
-            <Route path="/blackjack" element={<Blackjack />} />
-            <Route path="/Apropos" element={<Apropos />} />
-          </Route>
+    <Routes>
+      <Route path="/login" element={<Login />} />
+      <Route element={<ProtectedRoutes />}>
+        <Route path="/" element={<MainLayout />}>
+          <Route index element={<Home />} />
+          <Route path="profile/:id" element={<Profile />} />
+          <Route path="/logout" element={<Logout />} />
+          <Route path="/poker" element={<Poker />} />
+          <Route path="/roulette" element={<Roulette />} />
+          <Route path="/blackjack" element={<Blackjack />} />
+          <Route path="/Apropos" element={<Apropos />} />
         </Route>
-      </Routes>
-    </ArgentProvider>
+      </Route>
+    </Routes>
   );
 }
 export default App;

@@ -216,7 +216,7 @@ export const Roulette = () => {
         ref={containerRef}
         className="relative w-full max-w-3xl overflow-hidden border border-muted rounded-md bg-background h-20"
       >
-        {/* Ligne blanche au centre */}
+        {/*. Ligne blanche au centre */}
         <div className="absolute top-0 bottom-0 left-1/2 w-1 border-l-4 border-white z-10 -translate-x-1/2" />
 
         {/* Roulette */}
