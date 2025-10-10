@@ -1,5 +1,6 @@
 import React, { useState, createContext, useEffect, useContext } from "react";
 import { account, ID } from "@/lib/appwrite";
+import { Profile } from "@/lib/functions/profile";
 
 export const Auth = createContext();
 
@@ -32,6 +33,21 @@ export const AuthContext = ({ children }) => {
 			throw error;
 		}
 	}
+
+	async function handleRegister(userInfos) {
+		const id = ID.unique();
+		const response = await account.create({
+			userId: id,
+			email: userInfos.email,
+			password: userInfos.password,
+			name: userInfos.username,
+		});
+		if (response) {
+			handleLogin(userInfos.email, userInfos.password);
+			Profile.createProfile({ id: id, ...userInfos });
+		}
+	}
+
 	async function handleLogout() {
 		try {
 			await account.deleteSession({
@@ -45,7 +61,7 @@ export const AuthContext = ({ children }) => {
 	}
 
 	return (
-		<Auth.Provider value={{ loggedInUser, handleLogin, handleLogout, loading }}>
+		<Auth.Provider value={{ loggedInUser, handleLogin, handleLogout, loading, handleRegister }}>
 			{children}
 		</Auth.Provider>
 	);
